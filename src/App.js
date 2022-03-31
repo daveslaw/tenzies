@@ -39,6 +39,11 @@ function App() {
     }))
   }
 
+  function newGame() {
+    setDice(allNewDice());
+    setTenzies(false);
+  }
+
   
 
   function holdDice(id) {
@@ -67,6 +72,8 @@ function App() {
         holdDice={() => holdDice(die.id)}/> 
   ))
 
+
+
   return (
     <main>
       {tenzies && <Confetti/>}
@@ -75,7 +82,7 @@ function App() {
        <div className="dice-container">
          {diceElements}        
         </div>
-        <button onClick={rollDice} className="roll-dice">{tenzies ? "New Game" : "Roll"}</button>
+        <button onClick={tenzies ? newGame : rollDice} className="roll-dice">{tenzies ? "New Game" : "Roll"}</button>
     </main>
   );
 }
