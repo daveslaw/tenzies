@@ -3,15 +3,16 @@ import './App.css';
 import Die from './components/Die';
 import {nanoid} from 'nanoid';
 import Confetti from 'react-confetti';
-
-
+import StopWatch from './components/StopWatch';
 
 function App() {
   
   const [dice, setDice] = useState(allNewDice());
-  const [tenzies, setTenzies] = useState(false)
-
+  const [tenzies, setTenzies] = useState(false);
+  const [counter, setCounter] = useState(0);
+  
   function allNewDice() {
+    
     const newDice = []
     for (let i = 0; i < 10; i++) {
         newDice.push({
@@ -37,11 +38,17 @@ function App() {
             die :
             generateNewDie()
     }))
+    setCounter(prevState => prevState + 1);    
   }
+
+  useEffect(() => {
+    console.log(counter);
+  },[counter])
 
   function newGame() {
     setDice(allNewDice());
     setTenzies(false);
+    setCounter(0);
   }
 
   
@@ -60,7 +67,7 @@ function App() {
     const allSameValue = dice.every(die => die.value === firstValue)
     if (allHeld && allSameValue) {
       setTenzies(true)
-      console.log("You won!")
+      
     }
   }, [dice])
 
@@ -83,6 +90,8 @@ function App() {
          {diceElements}        
         </div>
         <button onClick={tenzies ? newGame : rollDice} className="roll-dice">{tenzies ? "New Game" : "Roll"}</button>
+      
+      {tenzies && <p>Counter: {counter}</p>}
     </main>
   );
 }
